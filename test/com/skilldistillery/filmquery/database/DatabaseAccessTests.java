@@ -8,25 +8,34 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import com.skilldistillery.filmquery.entities.Actor;
 import com.skilldistillery.filmquery.entities.Film;
 
 class DatabaseAccessTests {
-  private DatabaseAccessor db;
+	private DatabaseAccessor db;
 
-  @BeforeEach
-  void setUp() throws Exception {
-    db = new DatabaseAccessorObject();
-  }
+	@BeforeEach
+	void setUp() throws Exception {
+		db = new DatabaseAccessorObject();
+	}
 
-  @AfterEach
-  void tearDown() throws Exception {
-    db = null;
-  }
+	@AfterEach
+	void tearDown() throws Exception {
+		db = null;
+	}
 
-  @Test
-  void test_getFilmById_with_invalid_id_returns_null() throws SQLException {
-    Film f = db.findFilmById(-42);
-    assertNull(f);
-  }
+	@Test
+	void test_getFilmById_with_invalid_id_returns_null() throws SQLException {
+		Film f = db.findFilmById(-42);
+		assertNull(f);
+	}
+
+	@Test
+	void test_getActorById_with_invalid_id_returns_null() throws SQLException {
+		Actor a = db.findActorById(1);
+
+		assertEquals("Penelope", a.getFirstName());
+		System.out.println(a);
+	}
 
 }
