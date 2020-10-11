@@ -32,7 +32,7 @@ public class FilmQueryApp {
 
 		
 		
-			int choice;;
+			int choice;
 			 choice = input.nextInt();
 	
 		if(choice == 3) {
