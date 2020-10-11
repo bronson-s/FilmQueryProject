@@ -30,7 +30,7 @@ public DatabaseAccessorObject() {
 		Connection conn;
 		conn = DriverManager.getConnection(URL, user, pass);
 
-		String sql = "SELECT * FROM film WHERE id = ? ";
+		String sql = "SELECT * FROM film JOIN language on film.language_id = language.id WHERE film.id = ? ";
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		stmt.setInt(1, filmId);
 		ResultSet rs = stmt.executeQuery();
@@ -47,7 +47,8 @@ public DatabaseAccessorObject() {
 			double repCost = rs.getDouble(9);
 			String rating = rs.getString(10);
 			String features = rs.getString(11);
-			film = new Film(fId, title, desc, releaseYear, langId, rentDur, rate, length, repCost, rating, features,
+			String language = rs.getString(13);
+			film = new Film(fId, title, desc, releaseYear, langId, language, rentDur, rate, length, repCost, rating, features,
 					findActorsByFilmId(filmId));
 		
 		//film.setActors(findActorsByFilmId(filmId));
@@ -91,7 +92,7 @@ public DatabaseAccessorObject() {
 		String pass = "student";
 		Connection conn;
 		conn = DriverManager.getConnection(URL, user, pass);
-		String sql = "SELECT * FROM actor JOIN film_actor ON actor.id = film_actor.actor_id " + " WHERE film_id = ?";
+		String sql = "SELECT * FROM actor JOIN film_actor ON actor.id = film_actor.actor_id" + " WHERE film_id = ?";
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		stmt.setInt(1, filmId);
 		ResultSet rs = stmt.executeQuery();
@@ -115,14 +116,14 @@ public DatabaseAccessorObject() {
   		String pass = "student";
   		Connection conn;
   		conn = DriverManager.getConnection(URL, user, pass);
-  		String sql = "SELECT * FROM film WHERE description LIKE ? OR title LIKE ? ";
+  		String sql = "SELECT * FROM film JOIN language on film.language_id = language.id WHERE description LIKE ? OR title LIKE ? ";
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		stmt.setString(1, "%" + keyword + "%");
 		stmt.setString(2, "%" + keyword + "%");
 		ResultSet rs = stmt.executeQuery();
 
 		while (rs.next()) {
-			int fId = rs.getInt(1);
+			int fId = rs.getInt("id");
 			String title = rs.getString(2);
 			String desc = rs.getString(3);
 			short releaseYear = rs.getShort(4);
@@ -133,7 +134,8 @@ public DatabaseAccessorObject() {
 			double repCost = rs.getDouble(9);
 			String rating = rs.getString(10);
 			String features = rs.getString(11);
-			film = new Film(fId, title, desc, releaseYear, langId, rentDur, rate, length, repCost, rating, features);
+			String language = rs.getString(13);
+			film = new Film(fId, title, desc, releaseYear, langId, language, rentDur, rate, length, repCost, rating, features, findActorsByFilmId(fId));
             films.add(film);
 		}
 		return films;

@@ -9,6 +9,7 @@ public class Film {
 	private String description;
 	private short releaseYear;
 	private int languageId;
+	private String language;
 	private int rentalDuration;
 	private double rentalRate;
 	private int length;
@@ -26,6 +27,25 @@ public class Film {
 		this.description = description;
 		this.releaseYear = releaseYear;
 		this.languageId = languageId;
+		this.rentalDuration = rentalDuration;
+		this.rentalRate = rentalRate;
+		this.length = length;
+		this.replacementCost = replacementCost;
+		this.rating = rating;
+		this.specialFeatures = specialFeatures;
+		this.actors = actors;
+	}
+
+	public Film(int id, String title, String description, short releaseYear, int languageId, String language,
+			int rentalDuration, double rentalRate, int length, double replacementCost, String rating,
+			String specialFeatures, List<Actor> actors) {
+		super();
+		this.id = id;
+		this.title = title;
+		this.description = description;
+		this.releaseYear = releaseYear;
+		this.languageId = languageId;
+		this.language = language;
 		this.rentalDuration = rentalDuration;
 		this.rentalRate = rentalRate;
 		this.length = length;
@@ -150,6 +170,7 @@ public class Film {
 		result = prime * result + ((actors == null) ? 0 : actors.hashCode());
 		result = prime * result + ((description == null) ? 0 : description.hashCode());
 		result = prime * result + id;
+		result = prime * result + ((language == null) ? 0 : language.hashCode());
 		result = prime * result + languageId;
 		result = prime * result + length;
 		result = prime * result + ((rating == null) ? 0 : rating.hashCode());
@@ -185,6 +206,11 @@ public class Film {
 		} else if (!description.equals(other.description))
 			return false;
 		if (id != other.id)
+			return false;
+		if (language == null) {
+			if (other.language != null)
+				return false;
+		} else if (!language.equals(other.language))
 			return false;
 		if (languageId != other.languageId)
 			return false;
@@ -228,29 +254,31 @@ public class Film {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("Film [id=");
-		builder.append(id);
-		builder.append(", title=");
-		builder.append(title);
-		builder.append(", description=");
-		builder.append(description);
-		builder.append(", releaseYear=");
-		builder.append(releaseYear);
-		builder.append(", languageId=");
-		builder.append(languageId);
-		builder.append(", rentalDuration=");
-		builder.append(rentalDuration);
-		builder.append(", rentalRate=");
-		builder.append(rentalRate);
-		builder.append(", length=");
-		builder.append(length);
-		builder.append(", replacementCost=");
-		builder.append(replacementCost);
-		builder.append(", rating=");
-		builder.append(rating);
-		builder.append(", specialFeatures=");
-		builder.append(specialFeatures);
-		builder.append(", actors=");
+		builder.append("Film id= ");
+		builder.append(id + "\n" );
+		builder.append(" title= ");
+		builder.append(title + "\n");
+		builder.append(" description= ");
+		builder.append(description + "\n");
+		builder.append(" releaseYear= ");
+		builder.append(releaseYear + "\n");
+		builder.append(" language= ");
+		builder.append(language + "\n" );
+		//builder.append(", languageId= ");
+		//builder.append(languageId + "\n");
+		//builder.append(", rentalDuration= ");
+		//builder.append(rentalDuration + "\n");
+		//builder.append(", rentalRate= ");
+		//builder.append(rentalRate+ "\n");
+		//builder.append(", length= ");
+		//builder.append(length+ "\n");
+		//builder.append(", replacementCost= ");
+		//builder.append(replacementCost+ "\n");
+		builder.append(" rating= ");
+		builder.append(rating+ "\n");
+		//builder.append(", specialFeatures= ");
+		//builder.append(specialFeatures+ "\n");
+		builder.append(" actors:  ");
 		builder.append(showActors());
 		builder.append("]");
 		return builder.toString();
@@ -262,5 +290,13 @@ public class Film {
 
 	public void setActors(List<Actor> actors) {
 		this.actors = actors;
+	}
+
+	public String getLanguage() {
+		return language;
+	}
+
+	public void setLanguage(String language) {
+		this.language = language;
 	}
 }
